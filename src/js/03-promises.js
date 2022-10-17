@@ -1,20 +1,18 @@
-// import resolver from 'bower-npm-resolver';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-const formRef = document.querySelector('form');
+const formRef = document.querySelector('.form');
 
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
-    
     const shouldResolve = Math.random() > 0.3;
 
     setTimeout(() => {
-    if (shouldResolve) {
-      resolve({ position, delay });
-    } else {
-      reject({ position, delay });
-    }
-  }, delay);
-});
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
+      }
+    }, delay);
+  });
 }
 
 function onFormSubmit(event) {
@@ -22,12 +20,11 @@ function onFormSubmit(event) {
   let {
     elements: { delay, amount, step },
   } = event.currentTarget;
-  let delayRef = Number(delay.value);
-  let stepRef = Number(step.value);
-  let amountRef = Number(amount.value);
-  
-  for (let position = 0; position <= amountRef; position += 1){
-    createPromise(position, delay)
+  let elDelay = Number(delay.value);
+  let elStep = Number(step.value);
+  let elAmount = Number(amount.value);
+  for (let position = 0; position <= elAmount; position += 1) {
+    createPromise(position, elDelay)
       .then(({ position, delay }) => {
         console.log('success');
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
@@ -36,11 +33,12 @@ function onFormSubmit(event) {
         console.log('error');
         Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
-    delayRef += stepRef;
+    elDelay += elStep;
   }
   event.currentTarget.reset();
-  console.log('delay', delayRef);  
-  console.log('step', stepRef);
-  console.log('amount', amountRef);
+  console.log(elDelay);
+  console.log(elStep);
+  console.log(elAmount);
 }
-formRef.addEventListener('submit', onFormSubmit)
+
+formRef.addEventListener('submit', onFormSubmit);

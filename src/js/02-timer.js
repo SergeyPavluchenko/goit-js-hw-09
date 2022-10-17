@@ -7,7 +7,7 @@ const timerData = document.querySelector('#datetime-picker');;
 const timerRef = document.querySelector('.timer');
 const startBtn = document.querySelector('button[data-start]');
 
-let numberSelectedDates = null;
+let time  = null;
 startBtn.disabled = true;
 
 const options = {
